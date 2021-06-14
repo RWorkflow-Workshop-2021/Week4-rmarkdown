@@ -1,0 +1,20 @@
+---
+title: "RMarkdown Tutorial"
+author: Eli Holmes
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+    toc: false
+---
+
+
+## Files for the RMarkdown Tutorial
+
+This repository is meant to be copied by students.  It has a few examples of Rmd files.
+
+* Basic
+* Many figures
+* Tables
+* Math
+* Presentation
+* More complex Rmds
