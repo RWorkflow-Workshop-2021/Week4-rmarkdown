@@ -3,9 +3,9 @@ title: "Tables using Children and Table Functions"
 author: "EE Holmes"
 date: "6/15/20202"
 output:
+  html_document: default
   pdf_document: default
   word_document: default
-  html_document: default
 always_allow_html: yes
 ---
 
@@ -15,7 +15,7 @@ always_allow_html: yes
 knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
 ```
 
-This is an example of a Tables Rmd with separate Rmds for the individual tables. `Table1` is a simple table. `Table_Counts` is a table function that is then called to make 5 tables with the same format but different input data. For this example, I am only going to use `kable()` for all output types. See `Tables.Rmd` for examples of using the **kableExtra*` and** and **xtable** packages. 
+This is an example of a Tables Rmd with separate Rmds for the individual tables. `Table1` is a simple table. `Table_Counts` is a table function that is then called to make 5 tables with the same format but different input data. For this example, I am only going to use `kable()` for all output types. See `Tables.Rmd` for examples of using the **kableExtra** and **xtable** packages. 
 
 The example in Table_Counts.Rmd shows you how to include a page break in your Word doc between tables. Also note that I use `format="pandoc"` for the table. That works for Word in my experience.
 

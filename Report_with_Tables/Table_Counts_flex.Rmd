@@ -11,8 +11,9 @@ output:
 # run this Rmd independently during debugging and development
 knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
 library(knitr)
-# need this for %>% function and nice html tables
-library(kableExtra)
+# need this for %>% function
+library(dplyr)
+library(flextable)
 ```
 
 ```{r}
@@ -41,24 +42,25 @@ counts <- read.csv("Lower_Columbia_River_Chinook.csv", stringsAsFactors=FALSE)
 colnames(counts) <- fixcols(colnames(counts))
 ```
 
+The **flextable** package will do a bit nicer tables than **kable**.
+
 ```{r}
 # Create my table function; set default cols but different cols can be passed in
-tablecount <- function(data, cols="Spawners", caption=""){
-  dt <- data[, c("Year", cols)]
-  algn <- paste0("l", paste(rep("c", ncol(dt)-1), collapse=""))
-  cap <- paste0(caption, "Yearly counts of ", paste(cols, collapse=" and "), " for ", min(dt$Year), " to ", max(dt$Year))
-  if(rmarkdown::all_output_formats(knitr::current_input())[1] == "word_document")
-  tab <- knitr::kable(dt, align=algn, caption=cap, digits=0, 
-               row.names=FALSE, format="pandoc")
-  if(rmarkdown::all_output_formats(knitr::current_input())[1] == "html_document"){
-     dt <- mtcars[1:5, 1:6]
-     tab <- dt %>% kbl() %>% kable_styling(full_width = FALSE)
-  }
-  tab
+tablecount <- function(data, cols="Spawners", caption="", cap_wide=FALSE){
+  dat <- data[, c("Year", cols)]
+  cap <- paste0(caption, "Yearly counts of ", paste(cols, collapse=" and "), " for ", min(dat$Year), " to ", max(dat$Year))
+  tab <- dat %>%
+    regulartable() %>%
+    autofit() %>%
+    add_footer(., Year = "* These spawner counts are from river redd surveys.") %>%
+    merge_at(., i = 1, j = 1:ncol(dat), part = "footer") %>% 
+    add_header(., Year = cap, top = TRUE) %>% 
+    merge_at(., i = 1, j = 1:ncol(dat), part = "header") %>%
+    colformat_num(., j=1, big.mark = "", na_str = "NA")
 }
 ```
 
-```{r results='asis', eval=(rmarkdown::all_output_formats(knitr::current_input())[1] == "word_document")}
+```{r results='asis'}
 tbl <- 2
 col <- c("Spawners", "Fracwild")
 for(i in unique(counts$`Common Population Name`)[1:tbl]){
@@ -66,20 +68,7 @@ for(i in unique(counts$`Common Population Name`)[1:tbl]){
   cap <- paste0("Table ", tbl, ". ", i, ". ")
   tab <- tablecount(dat, cols=col, caption=cap)
   cat("\n", wordnewpage, "\n")
-  print(tab)
-  tbl <- tbl + 1
-}
-```
-
-```{r results='asis', eval=(rmarkdown::all_output_formats(knitr::current_input())[1] == "html_document")}
-tbl <- 2
-col <- c("Spawners", "Fracwild")
-for(i in unique(counts$`Common Population Name`)[1:tbl]){
-  dat <- subset(counts, `Common Population Name`==i & Year %in% 2000:2014)
-  cap <- paste0("Table ", tbl, ". ", i, ". ")
-  tab <- tablecount(dat, cols=col, caption=cap)
-  #cat("\n", wordnewpage, "\n")
-  cat(tab)
+  cat(knitr::knit_print(tab))
   tbl <- tbl + 1
 }
 ```
