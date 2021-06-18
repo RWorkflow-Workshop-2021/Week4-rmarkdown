@@ -1,8 +1,9 @@
 ---
 title: "Basic ioslidy presentation"
 author: "EE Holmes"
-date: "9/5/2018"
-output: ioslides_presentation
+output:
+  ioslides_presentation: default
+  slidy_presentation: default
 ---
 
 ```{r setup, include=FALSE}

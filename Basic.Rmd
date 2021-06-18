@@ -1,8 +1,9 @@
 ---
 title: "Basic"
 author: "EE Holmes"
-date: "9/2/2018"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -16,7 +17,6 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 Reference sheets:
 
 * In RStudio, click 'Help' menu and then 'Markdown Quick Reference'
-* https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf
 
 ## Knit
 

@@ -1,11 +1,10 @@
 ---
 title: "Math"
 author: "EE Holmes"
-date: "9/5/2018"
 output:
   pdf_document: default
-  html_document: default
   word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -34,8 +33,6 @@ It can be shown that the Fisher Information can also be written as
 \begin{equation}
 I(\theta) = - E_{Y|\theta}\{ \partial^2\log L(\theta|Y)/\partial\theta^2 \} = -\int_y [\partial^2\log L(\theta|y)/\partial\theta^2 f(y|\theta)dy
 \end{equation}
-
-$\dots$
 
 You can write equations with `$$  $$` also.  Take a look at the Rmd file.
 
