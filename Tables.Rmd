@@ -2,8 +2,8 @@
 title: "Tables"
 author: "EE Holmes"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
   word_document: default
 always_allow_html: yes
 ---
@@ -13,12 +13,13 @@ You can create nice html tables with R Markdown and they even look ok in Word.  
 ```{r setup, warning=FALSE}
 library(knitr)
 dt <- mtcars[1:5, 1:6]
+caption <- "This is the table caption."
 ```
 
 Then you can make a basic table that looks ok in html, Word or PDF:
 
 ```{r}
-kable(dt, align="lcccccc")
+kable(dt, align="lcccccc", caption = caption)
 ```
 
 If you would like fancy html tables, try the kableExtra package:
@@ -30,10 +31,12 @@ library(kableExtra)
 This will make a nice table if you knit to html but will not work in Word.
 
 ```{r}
-kable_styling(kable(dt, align = "lcccccc", booktabs = TRUE))
+kable_styling(
+  kable(dt, align = "lcccccc", booktabs = TRUE, caption = caption)
+  )
 ```
 
-You can easily create some nice effects for your tables in html documents like tables that float to the side.  
+You can easily create some nice effects for your tables in html and pdf documents like tables that float to the side. But table caption seems to hang in this case.
 
 ```{r fancy}
 tab <- kable(dt, booktabs = TRUE)
